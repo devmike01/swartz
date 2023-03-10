@@ -6,7 +6,7 @@ I came across a tool which let users generate reference from links. The tool was
 <img src="/screenshots/swartz_window.png" width="400px" height="300px"/>
 
 ### Output
-<img src="/screenshots/output.png" width="700px" height="300px"/>
+<img src="/screenshots/output.png" width="800px" height="300px"/>
 
 License
 -------
