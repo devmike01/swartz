@@ -1,5 +1,6 @@
 import requests
 
+
 class BulkReferencer:
     api: str = "https://www.mybib.com/api/autocite/search?q={}&sourceId=webpage"
 

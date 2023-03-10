@@ -42,6 +42,7 @@ class SwartzWindow:
                 if len(extracted_data) == len(links):
                     window['-OUTPUT-'].update('Reference generated successfully. Click here')
             except Exception as e:
+                print(e)
                 window['-OUTPUT-'].update('Error {}'.format(e.__str__()))
 
         # Finish up by removing from the screen
