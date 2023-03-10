@@ -14,7 +14,7 @@ class SwartzWindow:
                   [sg.Button('Generate', pad=(10, 10)), sg.Button('Quit')]]
 
         # Create the window
-        window = sg.Window('Window Title', layout, size=(470, 250), resizable=True)
+        window = sg.Window('Swartz', layout, size=(470, 250), resizable=True)
 
         bulk_ref = rd.BulkReferencer()
 
