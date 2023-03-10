@@ -1,6 +1,6 @@
 ## Swartz Reference
 
-I came across a tool which lets users generate reference from links. The tool was good however, it only allowed me to generate just one reference per article. So I look behind the shining UI and found the API. And then decided to build my another reference generator that let users generates multiple references with just one click of a button.
+I came across a tool which lets users generate reference from links. The tool was good however, it only allowed me to generate just one reference per article. So I looked behind the shining UI and found the API. And then decided to build my own reference generator that let me generate multiple references with just one click of a button.
 ### Screenshot of Swartz Reference
 <img src="/screenshots/swartz_window.png" width="400px" height="300px"/>
 
