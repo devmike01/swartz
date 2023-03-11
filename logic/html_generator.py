@@ -42,14 +42,14 @@ class HtmlGenerator:
                         given = ''
                         m_given = a.given.split(' ')
                         for i in range(len(m_given)):
-                            if i == len(m_given)-1:
+                            if i == len(m_given) - 1:
                                 given += '{} '.format(m_given[i])
                             else:
                                 given += '{}. '.format(m_given[i])
 
-                        _author = '{}, {}. '.format(a.family,   given if a.given is not None else '')
+                        _author = '{}, {}. '.format(a.family, given if a.given is not None else '')
                         if author_len > 1:
-                            if index == author_len-2:
+                            if index == author_len - 2:
                                 _author = _author.rstrip() + ', & '
                             elif index < author_len:
                                 _author = _author.rstrip() + ', '
@@ -70,10 +70,32 @@ class HtmlGenerator:
 
         # or directly to UTF-8 encoded bytes:
         html_bytes = bytes(airium)  # casting to bytes is airium shortcut to str(airium).encode('utf-8')
+
         return html
 
+    def quicksort(self, unsorted_keys: list):
+
+        if len(unsorted_keys) < 1:
+            return []
+        else:
+            pivot = unsorted_keys[0]
+            lesser = self.quicksort([x for x in unsorted_keys[1:] if x < pivot])
+            greater = self.quicksort([x for x in unsorted_keys[1:] if x >= pivot])
+            return lesser + [pivot] + greater
+
     def generate(self, json_results: list):
-        html = self.to_html(json_results)
+        final_res = list()
+        unsorted_result_dict = {}
+        unsorted_keys =[]
+        for result in json_results:
+            unsorted_result_dict[result.get_sort_key()] = result
+            unsorted_keys.append(result.get_sort_key())
+
+        for sorted_key in self.quicksort(unsorted_keys):
+            final_res.append(unsorted_result_dict[sorted_key])
+
+        html = self.to_html(final_res)
+
         filename = 'reference_{}.html'.format(str(round(time.time() * 1000)))
         file = open(filename, 'w')
         file.write(html)
@@ -81,3 +103,10 @@ class HtmlGenerator:
         filepath = '{}/{}'.format(os.getcwd(), filename)
         print(filepath)
         webbrowser.open('file://' + filepath)
+
+    def get_html(self, i: int, result: str, htmls):
+        if i < len(htmls):
+            print(i, len(htmls))
+            result += '<p {}'.format(htmls[i])
+            self.get_html(i + 1, result, htmls)
+        return result

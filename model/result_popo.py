@@ -1,6 +1,7 @@
 from model import data_issued as di
 from model import author as at
 
+
 class Result:
     def __init__(self, result):
         self.urlToImage = result['urlToImage']
@@ -15,3 +16,8 @@ class Result:
         self.title = self.metadata['title']
         self.url = self.metadata['url']
         self.chapterNumber = self.metadata['chapterNumber']
+
+    def get_sort_key(self):
+        author = self.authors[0].family if len(self.authors) > 0 else None
+        title = self.title
+        return author if author is not None else title

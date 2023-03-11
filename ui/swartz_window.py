@@ -31,19 +31,16 @@ class SwartzWindow:
                 links = user_inp.split("\n")
             else:
                 links = [user_inp]
-            try:
-                extracted_data = bulk_ref.extract_data(links)
-                results = []
-                for ref_result in extracted_data:
-                    for result in ref_result['results']:
-                        result_popo = rp.Result(result)
-                        results.append(result_popo)
-                hg.HtmlGenerator(results)
-                if len(extracted_data) == len(links):
-                    window['-OUTPUT-'].update('Reference generated successfully. Click here')
-            except Exception as e:
-                print(e)
-                window['-OUTPUT-'].update('Error {}'.format(e.__str__()))
+            extracted_data = bulk_ref.extract_data(links)
+            results = []
+            for ref_result in extracted_data:
+                for result in ref_result['results']:
+                    result_popo = rp.Result(result)
+                    results.append(result_popo)
+            hg.HtmlGenerator(results)
+            if len(extracted_data) == len(links):
+                window['-OUTPUT-'].update('Reference generated successfully. Click here')
+
 
         # Finish up by removing from the screen
         window.close()
