@@ -13,6 +13,10 @@ I came across a tool which lets users generate reference from links. The tool wa
 - Run the `app.py` script
 ...
 
+### Features
+- Generate reference from Youtube, Articles, PDF link, and etc
+- Sort references alphabetically by default
+
 License
 -------
 
