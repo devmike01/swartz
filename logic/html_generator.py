@@ -3,25 +3,18 @@ import time
 import webbrowser
 import os
 from model import result_popo as rp
+from threading import Thread
 
 
 class HtmlGenerator:
-    airium = Airium()
 
     def __init__(self, result: list):
+        #thread = Thread(target=)
         self.generate(result)
-        """
-        <p>Department of the Prime Minister and Cabinet.
-         (2017). <em>Understanding the needs of Aboriginal 
-         and Torres Strait Islander women and girls:
-          A joint project with the Australian Human Rights Commission</em>.
-           Australian Government. https://pmc.gov.au/sites/default/files/publications/factsheet-supporting-indigenous-women-girls.pdf</p>
-        """
 
     def to_html(self, json_results: list):
-        airium = self.airium
+        airium = Airium()
         html: str = ''
-        index = 0
         airium('<!DOCTYPE html>')
         with airium.html(lang="pl"):
             with airium.head():
@@ -41,17 +34,18 @@ class HtmlGenerator:
                         index += 1
                         given = ''
                         m_given = a.given.split(' ')
+                        print(a.given)
                         for i in range(len(m_given)):
                             if i == len(m_given) - 1:
-                                given += '{} '.format(m_given[i])
+                                given += '{}'.format(m_given[i][0])
                             else:
-                                given += '{}. '.format(m_given[i])
+                                given += '{}. '.format(m_given[i][0])
 
                         _author = '{}, {}. '.format(a.family, given if a.given is not None else '')
                         if author_len > 1:
                             if index == author_len - 2:
                                 _author = _author.rstrip() + ', & '
-                            elif index < author_len:
+                            elif index < (author_len - 2):
                                 _author = _author.rstrip() + ', '
                             else:
                                 _author = _author.rstrip()
