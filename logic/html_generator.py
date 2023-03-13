@@ -51,6 +51,9 @@ class HtmlGenerator:
                                 _author = _author.rstrip()
                         author += _author
 
+                    web_url = json_result.url
+                    if web_url is not None:
+                        web_url = '<a href={}>{}</a>'.format(web_url, web_url)
                     with airium.p(id="id23409231", klass='main_header'):
                         airium('{}. {} {}. ({}). <em>{}</em>. {}'.format(
                             str(number),
@@ -58,7 +61,7 @@ class HtmlGenerator:
                             json_result.title,
                             json_result.issued.year,
                             json_result.title,
-                            json_result.url))
+                            web_url))
                     index += 1
                 html += str(airium)  # casting to string extracts the value
 
