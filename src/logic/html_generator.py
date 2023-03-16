@@ -64,7 +64,7 @@ class HtmlGenerator:
                             str(number),
                             author if author is not None else '',
                             json_result.title,
-                            json_result.issued.year,
+                            json_result.issued.get_year(),
                             json_result.title,
                             web_url))
                     index += 1
