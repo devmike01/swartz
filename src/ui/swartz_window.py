@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
-from logic import ref_downloader as rd
-from model import result_popo as rp
-from logic import html_generator as hg
+from src.model import result_popo as rp
+from src.logic import html_generator as hg, ref_downloader as rd
 from threading import Thread
 
 
@@ -58,21 +57,22 @@ class SwartzWindow:
     def generate(self, values, bulk_ref, window):
         self.set_text(window, 'Fetching Reference(s)...')
         self.enable_generate_btn(window, False)
+        user_inp: str = values['-INPUT-']
+        is_multiline = user_inp.__contains__("\n")
+        if is_multiline:
+            links = user_inp.split("\n")
+        else:
+            links = [user_inp]
+        extracted_data = bulk_ref.extract_data(links)
+        results = []
+
         try:
-            user_inp: str = values['-INPUT-']
-            is_multiline = user_inp.__contains__("\n")
-            if is_multiline:
-                links = user_inp.split("\n")
-            else:
-                links = [user_inp]
-            extracted_data = bulk_ref.extract_data(links)
-            results = []
             for ref_result in extracted_data:
                 for result in ref_result['results']:
                     result_popo = rp.Result(result)
                     results.append(result_popo)
-            hg.HtmlGenerator(results)
-            if len(extracted_data) == len(links):
+            is_done = hg.HtmlGenerator(results)
+            if is_done:
                 self.set_text(window, 'Reference generated successfully.')
             self.enable_generate_btn(window, True)
         except Exception as e:

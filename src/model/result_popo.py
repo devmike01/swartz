@@ -1,5 +1,5 @@
-from model import data_issued as di
-from model import author as at
+from src.model import data_issued as di
+from src.model import author as at
 
 
 class Result:
@@ -13,7 +13,7 @@ class Result:
         self.issued = di.DateIssued(self.metadata['issued'])
         self.containerTitle = self.metadata['containerTitle']
         self.publisher = self.metadata['publisher']
-        self.title = self.metadata['title']
+        self.title = self.metadata['title'] if self.metadata['title'] is not None else ''
         self.url = self.metadata['url']
         self.chapterNumber = self.metadata['chapterNumber']
 

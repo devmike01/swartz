@@ -2,15 +2,14 @@ from airium import Airium
 import time
 import webbrowser
 import os
-from model import result_popo as rp
-from threading import Thread
+from src.model import result_popo as rp
 
 
 class HtmlGenerator:
 
     def __init__(self, result: list):
-        #thread = Thread(target=)
-        self.generate(result)
+        # thread = Thread(target=)
+        self.is_done = self.generate(result)
 
     def to_html(self, json_results: list):
         airium = Airium()
@@ -22,6 +21,11 @@ class HtmlGenerator:
                 airium.title(_t='{} Reference'.format("json_result.title"))
 
             with airium.body():
+                with airium.h3(''):
+                    airium('I tried as much as possible to make the generated references comply with the'
+                           ' APA 7 guidelines, If you spot any inconstitency or issues,'
+                           ' please do reach out to me on <a href="https://github.com/devmike01">Github</a>')
+
                 number = 0
                 for json in json_results:
                     number += 1
@@ -33,20 +37,21 @@ class HtmlGenerator:
                     for a in json_result.authors:
                         index += 1
                         given = ''
-                        m_given = a.given.split(' ')
-                        print(a.given)
+                        m_given = a.get_given().split(' ')
                         for i in range(len(m_given)):
-                            if i == len(m_given) - 1:
-                                given += '{}'.format(m_given[i][0])
-                            else:
-                                given += '{}. '.format(m_given[i][0])
+                            if len(m_given[i]) > 1:
+                                if i == len(m_given) - 1:
+                                    given += '{}'.format(m_given[i][0])
+                                else:
+                                    given += '{}. '.format(m_given[i][0])
 
-                        _author = '{}, {}. '.format(a.family, given if a.given is not None else '')
+                        _author = '{}{} '.format(a.get_family(),
+                                                 given if a.given is not None else '')
                         if author_len > 1:
                             if index == author_len - 2:
-                                _author = _author.rstrip() + ', & '
+                                _author = _author.rstrip() + ' & '
                             elif index < (author_len - 2):
-                                _author = _author.rstrip() + ', '
+                                _author = _author.rstrip()
                             else:
                                 _author = _author.rstrip()
                         author += _author
@@ -83,7 +88,7 @@ class HtmlGenerator:
     def generate(self, json_results: list):
         final_res = list()
         unsorted_result_dict = {}
-        unsorted_keys =[]
+        unsorted_keys = []
         for result in json_results:
             unsorted_result_dict[result.get_sort_key()] = result
             unsorted_keys.append(result.get_sort_key())
@@ -95,15 +100,14 @@ class HtmlGenerator:
 
         filename = 'reference_{}.html'.format(str(round(time.time() * 1000)))
         file = open(filename, 'w')
+
         file.write(html)
         file.close()
         filepath = '{}/{}'.format(os.getcwd(), filename)
-        print(filepath)
-        webbrowser.open('file://' + filepath)
+        return webbrowser.open('file://' + filepath)
 
     def get_html(self, i: int, result: str, htmls):
         if i < len(htmls):
-            print(i, len(htmls))
             result += '<p {}'.format(htmls[i])
             self.get_html(i + 1, result, htmls)
         return result
