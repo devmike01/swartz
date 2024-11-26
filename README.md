@@ -9,7 +9,7 @@ I came across a tool that allows users to generate references from links. The to
 ### How to use?
 - Download python 3
 - Clone this source code.
-- Run `pip install -r requirements` to download all external dependencies
+- Run `pip install -r requirements.txt` to download all external dependencies
 - Run the `app.py` script
 ...
 
