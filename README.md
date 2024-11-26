@@ -1,6 +1,5 @@
 ## Swartz Reference
-
-I came across a tool which lets users generate reference from links. The tool was good however, it only allowed me to generate just one reference per article. So I looked behind the shining UI and found the API. And then decided to build my own reference generator that let me generate multiple references with just one click of a button.
+I came across a tool that allows users to generate references from links. The tool was good; however, it only let me generate one reference per article. So, I looked beyond the shiny UI, found the API, and decided to build my own reference generator that allows me to create multiple references with just one click of a button.
 ### Screenshot of Swartz Reference
 <img src="/screenshots/swartz_window.png" width="400px" height="300px"/>
 
@@ -9,6 +8,7 @@ I came across a tool which lets users generate reference from links. The tool wa
 
 ### How to use?
 - Download python 3
+- Clone this source code.
 - Run `pip install -r requirements` to download all external dependencies
 - Run the `app.py` script
 ...
